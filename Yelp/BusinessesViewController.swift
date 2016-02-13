@@ -64,7 +64,6 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
         print(categories )
         Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil) { (businesses:[Business]!, error:NSError!) -> Void in
             self.businesses = businesses
-            print(businesses)
             self.businessTableView.reloadData()
         }
     }
