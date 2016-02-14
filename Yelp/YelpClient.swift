@@ -12,10 +12,11 @@ import AFNetworking
 import BDBOAuth1Manager
 
 // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
-let yelpConsumerKey = "vxKwwcR_NMQ7WaEiQBK_CA"
-let yelpConsumerSecret = "33QCvh5bIF5jIHR5klQr7RtBDhQ"
-let yelpToken = "uRcRswHFYa1VkDrGV6LAW2F8clGh5JHV"
-let yelpTokenSecret = "mqtKIxMIR4iBtBPZCmCLEb-Dz3Y"
+// Jennifer's Keys.
+let yelpConsumerKey = "WjB24TxSNkMWckclL9SQKA"
+let yelpConsumerSecret = "W4Kd4lFwFq8LJbQJhfX1ailxAZM"
+let yelpToken = "M7Wmhhq5nOSvuAZZQiaE0__moElT1Fv0"
+let yelpTokenSecret = "nq0JhVhw9SJoblNQOLlySUbvb_8"
 
 enum YelpSortMode: Int {
     case BestMatched = 0, Distance, HighestRated
@@ -52,10 +53,10 @@ class YelpClient: BDBOAuth1RequestOperationManager {
     }
     
     func searchWithTerm(term: String, completion: ([Business]!, NSError!) -> Void) -> AFHTTPRequestOperation {
-        return searchWithTerm(term, sort: nil, categories: nil, deals: nil, completion: completion)
+        return searchWithTerm(term, sort: nil, categories: nil, deals: nil, radius: nil, completion: completion)
     }
     
-    func searchWithTerm(term: String, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: ([Business]!, NSError!) -> Void) -> AFHTTPRequestOperation {
+    func searchWithTerm(term: String, sort: YelpSortMode?, categories: [String]?, deals: Bool?, radius: Int?, completion: ([Business]!, NSError!) -> Void) -> AFHTTPRequestOperation {
         // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
 
         // Default the location to San Francisco
@@ -71,6 +72,10 @@ class YelpClient: BDBOAuth1RequestOperationManager {
         
         if deals != nil {
             parameters["deals_filter"] = deals!
+        }
+        
+        if radius != nil {
+            parameters["radius_filter"] = radius
         }
         
         print(parameters)

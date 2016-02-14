@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */; };
 		222D8A6019CCF9F900D2DB53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A5E19CCF9F900D2DB53 /* Main.storyboard */; };
-		222D8A6219CCF9F900D2DB53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A6119CCF9F900D2DB53 /* Images.xcassets */; };
 		222D8A6519CCF9F900D2DB53 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A6319CCF9F900D2DB53 /* LaunchScreen.xib */; };
 		222D8A7119CCF9F900D2DB53 /* YelpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8A7019CCF9F900D2DB53 /* YelpTests.swift */; };
 		222D8A7D19CCFAE000D2DB53 /* YelpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8A7C19CCFAE000D2DB53 /* YelpClient.swift */; };
 		22AAAA991AEA0A9700A544AF /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAAA981AEA0A9700A544AF /* Business.swift */; };
 		22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */; };
+		7A52165B1C700E6800E4F937 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A52165A1C700E6800E4F937 /* Filters.swift */; };
 		7AF54E091C6C5DA000ACFA12 /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF54E081C6C5DA000ACFA12 /* BusinessCell.swift */; };
 		7AF54E0B1C6C6BD800ACFA12 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF54E0A1C6C6BD800ACFA12 /* SwitchCell.swift */; };
 		7AF54E0D1C6C6D0D00ACFA12 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF54E0C1C6C6D0D00ACFA12 /* FiltersViewController.swift */; };
@@ -36,7 +36,6 @@
 		222D8A5919CCF9F900D2DB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		222D8A5F19CCF9F900D2DB53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		222D8A6119CCF9F900D2DB53 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		222D8A6419CCF9F900D2DB53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		222D8A6A19CCF9F900D2DB53 /* YelpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YelpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		222D8A6F19CCF9F900D2DB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -44,6 +43,7 @@
 		222D8A7C19CCFAE000D2DB53 /* YelpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpClient.swift; sourceTree = "<group>"; };
 		22AAAA981AEA0A9700A544AF /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessesViewController.swift; sourceTree = "<group>"; };
+		7A52165A1C700E6800E4F937 /* Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		7AF54E081C6C5DA000ACFA12 /* BusinessCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BusinessCell.swift; path = ../BusinessCell.swift; sourceTree = "<group>"; };
 		7AF54E0A1C6C6BD800ACFA12 /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		7AF54E0C1C6C6D0D00ACFA12 /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
@@ -100,7 +100,6 @@
 				22AAAA9D1AEA1EC600A544AF /* View Controllers */,
 				222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */,
 				222D8A5E19CCF9F900D2DB53 /* Main.storyboard */,
-				222D8A6119CCF9F900D2DB53 /* Images.xcassets */,
 				222D8A6319CCF9F900D2DB53 /* LaunchScreen.xib */,
 				222D8A5819CCF9F900D2DB53 /* Supporting Files */,
 			);
@@ -144,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				22AAAA981AEA0A9700A544AF /* Business.swift */,
+				7A52165A1C700E6800E4F937 /* Filters.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -270,7 +270,6 @@
 			files = (
 				222D8A6019CCF9F900D2DB53 /* Main.storyboard in Resources */,
 				222D8A6519CCF9F900D2DB53 /* LaunchScreen.xib in Resources */,
-				222D8A6219CCF9F900D2DB53 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7AF54E091C6C5DA000ACFA12 /* BusinessCell.swift in Sources */,
+				7A52165B1C700E6800E4F937 /* Filters.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,
 				7AF54E0D1C6C6D0D00ACFA12 /* FiltersViewController.swift in Sources */,
 				22AAAA991AEA0A9700A544AF /* Business.swift in Sources */,

@@ -8,9 +8,11 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController , UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate{
+class BusinessesViewController: UIViewController , UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate, UISearchBarDelegate{
 
     var businesses: [Business]!
+    var searchBar: UISearchBar!
+    var currentFilters: Filters!
     
     @IBOutlet weak var businessTableView: UITableView!
     override func viewDidLoad() {
@@ -20,29 +22,36 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
         self.businessTableView.rowHeight = UITableViewAutomaticDimension
         self.businessTableView.estimatedRowHeight = 120
         
-        Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            
-            self.businessTableView.reloadData()
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
-            }
-        })
-        
-    
 
-/* Example of Yelp search with more search options specified
-        Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
-            }
-        }
-*/
+        // Initialize the UISearchBar
+        searchBar = UISearchBar()
+        searchBar.delegate = self
+        
+        // Add SearchBar to the NavigationBar
+        searchBar.sizeToFit()
+        navigationItem.titleView = searchBar
+        
+        self.currentFilters = Filters(dictionary: ["searchTerm": "Restaurants"])
+        doYelpSearch()
+
+
     }
+    
+    func doYelpSearch() {
+
+        doYelpSearch(currentFilters.searchTerm!, sort: currentFilters.sortMode, categories: currentFilters.categories, deals: currentFilters.deals, radius: currentFilters.radius)
+    }
+    
+    func doYelpSearch(searchTerm: String!, sort:YelpSortMode?, categories: [String]?, deals: Bool?, radius: Int?) {
+        
+        Business.searchWithTerm(searchTerm, sort: sort, categories: categories, deals: deals, radius: radius) { (businesses: [Business]!, error: NSError!) -> Void in
+            self.businesses = businesses
+            self.businessTableView.reloadData()
+
+        }
+        
+    }
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = businessTableView.dequeueReusableCellWithIdentifier("BusinessCell", forIndexPath: indexPath) as! BusinessCell
@@ -58,14 +67,12 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
         }
     }
     
-    func filterViewController(filterViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
-        
-        let categories = filters["categories"] as? [String]
-        print(categories )
-        Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil) { (businesses:[Business]!, error:NSError!) -> Void in
-            self.businesses = businesses
-            self.businessTableView.reloadData()
-        }
+
+    
+    func filterViewController(filterViewController: FiltersViewController, didUpdateFilters filters: Filters) {
+        currentFilters = filters
+        doYelpSearch()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,4 +90,27 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
         filtersController.delegate = self
     }
 
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+        searchBar.setShowsCancelButton(true, animated: true)
+        return true;
+    }
+    
+    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+        searchBar.setShowsCancelButton(false, animated: true)
+        return true;
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.text = ""
+        currentFilters.searchTerm = "Restaurants"
+        doYelpSearch()
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        currentFilters.searchTerm =  searchBar.text!
+        doYelpSearch()
+    }
+    
 }

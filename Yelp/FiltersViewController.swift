@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol FiltersViewControllerDelegate {
-    optional func filterViewController(filterViewController: FiltersViewController, didUpdateFilters filters:[String:AnyObject])
+    optional func filterViewController(filterViewController: FiltersViewController, didUpdateFilters filters:Filters)
 }
 
 class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate {
@@ -17,7 +17,15 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     
     var categories: [[String:String]]!
-    var switchStates = [Int:Bool]()
+    var sortMode: [String:YelpSortMode]!
+    var distance: [String:Int]!
+    var switchStates = [Int:[Int:Bool]]()
+    var allFilters: [(String,[String])] = [
+        ("Most Popular", ["Deals"]),
+        ("Distance", ["2 blocks", "6 blocks", "1 mile", "5 miles"]),
+        ("Sort By", ["Best Matched", "Distance", "Highest Rated"]),
+        ("Category", []),
+    ]
     
     weak var delegate: FiltersViewControllerDelegate?
     
@@ -26,50 +34,111 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.delegate = self
         tableView.dataSource = self
         // Do any additional setup after loading the view.
+        
         categories = yelpCategories()
-
+        sortMode = yelpSortMode()
+        distance = yelpDistanceMode()
+        
+        // Mutate Categories
+        var mutateCategories: [String] = []
+        for category in self.categories {
+            mutateCategories.append(category["name"]!)
+        }
+        self.allFilters[3].1 = mutateCategories
     }
     
     @IBAction func onCancelButton(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
-
     }
     
     @IBAction func onSearchButton(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
         
-        var filters = [String:AnyObject]()
-        
         var selectedCategories = [String]()
-        for (row, isSelected) in switchStates {
-            if isSelected {
-                selectedCategories.append(categories[row]["code"]!)
+        var selectedSort = [YelpSortMode]()
+
+        let filterObj = Filters(dictionary: [String:AnyObject]())
+        
+        
+        for (sectionNum, rows) in switchStates {
+            for (rowNum, isSelected) in rows {
+                let entryName = self.allFilters[sectionNum].1[rowNum]
+                switch self.allFilters[sectionNum].0 {
+                case "Category":
+                    if isSelected {
+                        selectedCategories.append(categories[rowNum]["code"]!)
+                    }
+                    
+                case "Distance":
+                    filterObj.radius = self.distance[entryName]
+                    
+                case "Sort By":
+                    if isSelected {
+                        selectedSort.append(self.sortMode[entryName]!)
+                    }
+                    
+                case "Most Popular":
+                    if isSelected {
+                        filterObj.deals = true
+                    }
+                    
+                default:
+                    print("Invalid section number \(sectionNum)")
+                }
+                
+                if self.allFilters[sectionNum].0 == "Categories" {
+                                    } else {
+                    print(self.allFilters[sectionNum].1[rowNum])
+                }
+
             }
         }
         if selectedCategories.count > 0 {
-            filters["categories"] = selectedCategories
+            filterObj.categories = selectedCategories
+        }
+        if selectedSort.count > 0 {
+            filterObj.sortMode = selectedSort.first
         }
         
-        delegate?.filterViewController?(self, didUpdateFilters: filters)
+        delegate?.filterViewController?(self, didUpdateFilters: filterObj)
         
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.categories.count
+        let filter =  allFilters[section]
+        return filter.1.count
     }
-    
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
-        cell.switchLabel.text = self.categories[indexPath.row]["name"]
+
+        cell.switchLabel.text = self.allFilters[indexPath.section].1[indexPath.row]
+
         cell.delegate = self
         
-        cell.onOffSwitch.on = self.switchStates[indexPath.row] ?? false
+        if self.switchStates[indexPath.section] != nil  {
+            cell.onOffSwitch.on = self.switchStates[indexPath.section]![indexPath.row] ?? false
+        } else {
+            cell.onOffSwitch.on = false
+        }
+        
         return cell
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return self.allFilters.count
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.allFilters[section].0
     }
     
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool) {
         let indexPath = tableView.indexPathForCell(switchCell)!
-        self.switchStates[indexPath.row] = value
+        if self.switchStates[indexPath.section] == nil {
+            self.switchStates[indexPath.section] = [Int:Bool]()
+        }
+        self.switchStates[indexPath.section]![indexPath.row] = value
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,6 +156,23 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Pass the selected object to the new view controller.
     }
     */
+    func yelpSortMode() -> [String: YelpSortMode] {
+        return [
+            "Best Matched": YelpSortMode.BestMatched,
+            "Distance": YelpSortMode.Distance,
+            "Highest Rated": YelpSortMode.HighestRated,
+        ]
+    }
+    
+    func yelpDistanceMode() -> [String: Int] {
+        return [
+            "2 blocks": 274 * 2,
+            "6 blocks": 274 * 6,
+            "1 mile": 1609,
+            "5 miles": 1609 * 5,
+        ]
+    }
+    
     func yelpCategories() -> [[String:String]] {
         return [["name" : "Afghan", "code": "afghani"],
             ["name" : "African", "code": "african"],
