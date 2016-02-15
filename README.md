@@ -42,6 +42,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
+
 ![Video Walkthrough for Filter and MapView](HW2-Filter,Map.gif)
 ![Video Walkthrough for Infinte Scroll](HW2-Filter,Search.gif)
 ![Video Walkthrough](HW2-Flip.gif)
@@ -49,6 +50,7 @@ Here's a walkthrough of implemented user stories:
 ### Old Autolayout proof
 Since I changed the UI, its less resizing for autolayout is less obvious:
 Old view is at commit: c16b88f338364ead69746b0e2f04be5596295189
+
 ![Video Walkthrough for AutoLayout](HW2-AutoLayoutProof.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
