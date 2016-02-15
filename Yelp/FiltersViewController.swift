@@ -86,10 +86,6 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
                     print("Invalid section number \(sectionNum)")
                 }
                 
-                if self.allFilters[sectionNum].0 == "Categories" {
-                                    } else {
-                    print(self.allFilters[sectionNum].1[rowNum])
-                }
 
             }
         }
@@ -111,7 +107,6 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
-        print("Cell for row")
         cell.switchLabel.text = self.allFilters[indexPath.section].1[indexPath.row]
 
         cell.delegate = self
