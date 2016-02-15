@@ -111,7 +111,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
-
+        print("Cell for row")
         cell.switchLabel.text = self.allFilters[indexPath.section].1[indexPath.row]
 
         cell.delegate = self
@@ -139,6 +139,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.switchStates[indexPath.section] = [Int:Bool]()
         }
         self.switchStates[indexPath.section]![indexPath.row] = value
+        
     }
 
     override func didReceiveMemoryWarning() {

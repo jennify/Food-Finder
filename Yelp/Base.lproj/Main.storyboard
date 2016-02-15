@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Yelp-->
@@ -144,12 +145,19 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="nF1-Ne-JEJ"/>
                     <navigationItem key="navigationItem" title="Yelp" id="wBl-Ms-VYj">
-                        <barButtonItem key="rightBarButtonItem" image="Filter2" id="BVV-Bm-T1i">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <segue destination="5R9-CP-nhh" kind="modal" id="HjF-M3-6aY"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="Filter2" id="BVV-Bm-T1i">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="5R9-CP-nhh" kind="modal" identifier="filtersSegue" id="HjF-M3-6aY"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="location" id="Vsb-5U-O4g">
+                                <connections>
+                                    <segue destination="fbJ-g5-PqU" kind="push" identifier="mapsSegue" id="QtT-CX-xmY"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="businessTableView" destination="PF3-rY-wSa" id="LXz-2C-QhA"/>
@@ -158,6 +166,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fgb-4b-F1b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1485" y="338"/>
+        </scene>
+        <!--Business Maps View Controller-->
+        <scene sceneID="JUN-Aq-JVV">
+            <objects>
+                <viewController id="fbJ-g5-PqU" customClass="BusinessMapsViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bXc-MN-m82"/>
+                        <viewControllerLayoutGuide type="bottom" id="3lH-SZ-qph"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sEw-46-AsZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yhW-w7-AZu">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3lH-SZ-qph" firstAttribute="top" secondItem="yhW-w7-AZu" secondAttribute="bottom" id="TCd-yx-y9V"/>
+                            <constraint firstItem="yhW-w7-AZu" firstAttribute="leading" secondItem="sEw-46-AsZ" secondAttribute="leading" id="W8x-ny-PXl"/>
+                            <constraint firstItem="yhW-w7-AZu" firstAttribute="top" secondItem="bXc-MN-m82" secondAttribute="bottom" id="Z9r-IW-Tbo"/>
+                            <constraint firstAttribute="trailing" secondItem="yhW-w7-AZu" secondAttribute="trailing" id="rqQ-sa-5oI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="nh6-rq-0he"/>
+                    <connections>
+                        <outlet property="mapView" destination="yhW-w7-AZu" id="Y2V-ys-ZyO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xgc-4Q-6cV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1924" y="1059"/>
         </scene>
         <!--Filters-->
         <scene sceneID="DyE-xW-rvp">
@@ -280,5 +321,6 @@
     </scenes>
     <resources>
         <image name="Filter2" width="16" height="16"/>
+        <image name="location" width="16" height="16"/>
     </resources>
 </document>

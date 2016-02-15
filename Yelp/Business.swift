@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class Business: NSObject {
     let name: String?
     let address: String?
@@ -16,6 +17,8 @@ class Business: NSObject {
     let distance: String?
     let ratingImageURL: NSURL?
     let reviewCount: NSNumber?
+    let lattitude: Double?
+    let longitude: Double?
     
     init(dictionary: NSDictionary) {
         name = dictionary["name"] as? String
@@ -28,6 +31,8 @@ class Business: NSObject {
         }
         
         let location = dictionary["location"] as? NSDictionary
+        var lattitude: Double? = nil
+        var longitude: Double? = nil
         var address = ""
         if location != nil {
             let addressArray = location!["address"] as? NSArray
@@ -42,7 +47,15 @@ class Business: NSObject {
                 }
                 address += neighborhoods![0] as! String
             }
+            let coordinates = location!["coordinate"] as? NSDictionary
+            if coordinates != nil {
+                lattitude = coordinates!["latitude"] as? Double
+                longitude = coordinates!["longitude"] as? Double
+            }
+            
         }
+        self.lattitude = lattitude
+        self.longitude = longitude
         self.address = address
         
         let categoriesArray = dictionary["categories"] as? [[String]]

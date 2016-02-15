@@ -15,6 +15,7 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
     var currentFilters: Filters!
     var isMoreDataLoading: Bool!
     var loadingMoreView: InfiniteScrollActivityView?
+    
 
     @IBOutlet weak var businessTableView: UITableView!
     override func viewDidLoad() {
@@ -23,6 +24,7 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
         self.businessTableView.dataSource = self
         self.businessTableView.rowHeight = UITableViewAutomaticDimension
         self.businessTableView.estimatedRowHeight = 120
+        
         
         // Initialize Infinite scroll loading view
         self.isMoreDataLoading = false
@@ -83,7 +85,7 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
         Business.searchWithTerm(searchTerm, sort: sort, categories: categories, deals: deals, radius: radius, offset: offset) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.businessTableView.reloadData()
-
+            
         }
         
     }
@@ -120,10 +122,18 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let navigationController = segue.destinationViewController as! UINavigationController
-        let filtersController = navigationController.topViewController as! FiltersViewController
-        
-        filtersController.delegate = self
+
+        if (segue.identifier == "filtersSegue"){
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let filtersController = navigationController.topViewController as! FiltersViewController
+    
+            filtersController.delegate = self
+        } else if (segue.identifier == "mapsSegue") {
+            let mapsController = segue.destinationViewController as! BusinessMapsViewController
+            mapsController.businesses = self.businesses
+//            mapsController.delegate = self
+        }
+
     }
 
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
