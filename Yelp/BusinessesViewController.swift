@@ -8,12 +8,14 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController , UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate, UISearchBarDelegate{
+class BusinessesViewController: UIViewController , UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate, UISearchBarDelegate, UIScrollViewDelegate {
 
     var businesses: [Business]!
     var searchBar: UISearchBar!
     var currentFilters: Filters!
-    
+    var isMoreDataLoading: Bool!
+    var loadingMoreView: InfiniteScrollActivityView?
+
     @IBOutlet weak var businessTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,20 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
         self.businessTableView.rowHeight = UITableViewAutomaticDimension
         self.businessTableView.estimatedRowHeight = 120
         
+        // Initialize Infinite scroll loading view
+        self.isMoreDataLoading = false
+        self.loadingMoreView = InfiniteScrollActivityView()
+        
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRectMake(0, businessTableView.contentSize.height, businessTableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.hidden = true
+        businessTableView.addSubview(loadingMoreView!)
+        
+        // Set up Insets to view the Infinite Scroll
+        var insets = businessTableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        businessTableView.contentInset = insets
 
         // Initialize the UISearchBar
         searchBar = UISearchBar()
@@ -33,18 +49,38 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
         
         self.currentFilters = Filters(dictionary: ["searchTerm": "Restaurants"])
         doYelpSearch()
+        
 
 
     }
+    
+    /* Yelp API calls */
     
     func doYelpSearch() {
-
-        doYelpSearch(currentFilters.searchTerm!, sort: currentFilters.sortMode, categories: currentFilters.categories, deals: currentFilters.deals, radius: currentFilters.radius)
+        doYelpSearch(currentFilters.searchTerm!, sort: currentFilters.sortMode, categories: currentFilters.categories, deals: currentFilters.deals, radius: currentFilters.radius, offset: nil)
     }
     
-    func doYelpSearch(searchTerm: String!, sort:YelpSortMode?, categories: [String]?, deals: Bool?, radius: Int?) {
+    func doLoadMoreYelpSearch() {
+        // Infinite Scroll
         
-        Business.searchWithTerm(searchTerm, sort: sort, categories: categories, deals: deals, radius: radius) { (businesses: [Business]!, error: NSError!) -> Void in
+        let searchTerm = currentFilters.searchTerm
+        let categories = currentFilters.categories
+        let deals = currentFilters.deals
+        let radius = currentFilters.radius
+        let offset = businesses.count
+        let sort = currentFilters.sortMode
+        
+        Business.searchWithTerm(searchTerm, sort: sort, categories: categories, deals: deals, radius: radius, offset: offset) { (businesses: [Business]!, error: NSError!) -> Void in
+            self.businesses.appendContentsOf(businesses)
+            self.isMoreDataLoading = false
+            self.loadingMoreView?.stopAnimating()
+            self.businessTableView.reloadData()
+            
+        }
+    }
+    
+    func doYelpSearch(searchTerm: String!, sort:YelpSortMode?, categories: [String]?, deals: Bool?, radius: Int?, offset: Int?) {
+        Business.searchWithTerm(searchTerm, sort: sort, categories: categories, deals: deals, radius: radius, offset: offset) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.businessTableView.reloadData()
 
@@ -113,4 +149,26 @@ class BusinessesViewController: UIViewController , UITableViewDataSource, UITabl
         doYelpSearch()
     }
     
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = businessTableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - businessTableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && businessTableView.dragging) {
+                isMoreDataLoading = true
+                // Code to load more results
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRectMake(0, businessTableView.contentSize.height, businessTableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView?.startAnimating()
+                
+                doLoadMoreYelpSearch()
+
+            }
+        }
+    }
 }

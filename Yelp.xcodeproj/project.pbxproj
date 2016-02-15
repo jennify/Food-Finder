@@ -16,6 +16,7 @@
 		22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */; };
 		7A52165B1C700E6800E4F937 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A52165A1C700E6800E4F937 /* Filters.swift */; };
 		7A6A4B061C708D3F00D4903B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A6A4B051C708D3F00D4903B /* Images.xcassets */; };
+		7A6A4B0A1C716B3C00D4903B /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6A4B091C716B3C00D4903B /* InfiniteScrollActivityView.swift */; };
 		7AF54E091C6C5DA000ACFA12 /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF54E081C6C5DA000ACFA12 /* BusinessCell.swift */; };
 		7AF54E0B1C6C6BD800ACFA12 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF54E0A1C6C6BD800ACFA12 /* SwitchCell.swift */; };
 		7AF54E0D1C6C6D0D00ACFA12 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF54E0C1C6C6D0D00ACFA12 /* FiltersViewController.swift */; };
@@ -46,6 +47,7 @@
 		22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessesViewController.swift; sourceTree = "<group>"; };
 		7A52165A1C700E6800E4F937 /* Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		7A6A4B051C708D3F00D4903B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7A6A4B091C716B3C00D4903B /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 		7AF54E081C6C5DA000ACFA12 /* BusinessCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BusinessCell.swift; path = ../BusinessCell.swift; sourceTree = "<group>"; };
 		7AF54E0A1C6C6BD800ACFA12 /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		7AF54E0C1C6C6D0D00ACFA12 /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				7AF54E081C6C5DA000ACFA12 /* BusinessCell.swift */,
 				7AF54E0A1C6C6BD800ACFA12 /* SwitchCell.swift */,
+				7A6A4B091C716B3C00D4903B /* InfiniteScrollActivityView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A6A4B0A1C716B3C00D4903B /* InfiniteScrollActivityView.swift in Sources */,
 				7AF54E091C6C5DA000ACFA12 /* BusinessCell.swift in Sources */,
 				7A52165B1C700E6800E4F937 /* Filters.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,
