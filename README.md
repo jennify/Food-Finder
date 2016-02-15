@@ -2,8 +2,7 @@
 
 Yelp is a Yelp search app using the [Yelp API](http://www.yelp.com/developers/documentation/v2/search_api).
 
-Time spent: **X** hours spent in total
-Day 1: 3 hours
+Time spent: 10 hours spent in total
 
 ## User Stories
 
@@ -43,9 +42,9 @@ Please list two areas of the assignment you'd like to **discuss further with you
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-![Video Walkthrough](HW2-Flip.gif)
 ![Video Walkthrough for Filter and MapView](HW2-Filter,Map.gif)
 ![Video Walkthrough for Infinte Scroll](HW2-Filter,Search.gif)
+![Video Walkthrough](HW2-Flip.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
